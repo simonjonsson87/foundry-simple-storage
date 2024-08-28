@@ -1,66 +1,35 @@
-## Foundry
+# Overview
+This is a simple storage smart contract written in Solidity using Foundry. 
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+This is coursework for Patrick Collin's Foundry Fundamentals course.
 
-Foundry consists of:
+# A few useful commands
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
-
-## Documentation
-
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
+### Setup anvil, a wallet, and publish the contract
+Start anvil blockchain
+```solidity
+anvil
 ```
 
-### Test
-
-```shell
-$ forge test
+Add anvil private key to wallet 
+```solidity
+cast wallet import anvilAccount1 --interactive
 ```
 
-### Format
-
-```shell
-$ forge fmt
+Deploy a contract to the anvil chain we just created
+```solidity
+forge script script/DeploySimpleStorage.s.sol --rpc-url http://127.0.0.1:8545 --broadcast --account anvilAccount1 --sender 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
 ```
 
-### Gas Snapshots
-
-```shell
-$ forge snapshot
+### Manually interact with the contract
+```solidity
+cast send 0x5FbDB2315678afecb367f032d93F642f64180aa3 "store(uint256)" 1337 --rpc-url http://127.0.0.1:8545  --account anvilAccount1 
 ```
 
-### Anvil
-
-```shell
-$ anvil
+```solidity
+cast call 0x5FbDB2315678afecb367f032d93F642f64180aa3 "retrieve()"
 ```
 
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+```solidity
+cast --to-base 0x0000000000000000000000000000000000000000000000000000000000000539 dec
 ```
